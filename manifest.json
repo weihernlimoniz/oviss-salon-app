@@ -1,7 +1,7 @@
 {
   "name": "Oviss Salon Customer App",
   "short_name": "Oviss Salon",
-  "start_url": "/",
+  "start_url": "/?mode=standalone",
   "scope": "/",
   "display": "standalone",
   "background_color": "#09090b",
