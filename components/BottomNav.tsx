@@ -15,7 +15,13 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange }) => {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 h-20 bg-zinc-950/80 backdrop-blur-xl border-t border-zinc-900 flex justify-around items-center px-4 max-w-md mx-auto z-30">
+    <div 
+      className="fixed bottom-0 left-0 right-0 bg-zinc-950/80 backdrop-blur-xl border-t border-zinc-900 flex justify-around items-center px-4 max-w-md mx-auto z-30"
+      style={{ 
+        paddingBottom: 'env(safe-area-inset-bottom)',
+        height: 'calc(5rem + env(safe-area-inset-bottom))'
+      }}
+    >
       {tabs.map(tab => {
         const isActive = activeTab === tab.id;
         const color = isActive ? '#f59e0b' : '#52525b';

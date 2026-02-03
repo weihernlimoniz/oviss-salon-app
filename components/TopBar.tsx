@@ -9,7 +9,13 @@ interface TopBarProps {
 
 const TopBar: React.FC<TopBarProps> = ({ onNotificationClick, unreadCount }) => {
   return (
-    <div className="h-16 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-900 px-6 flex items-center justify-between fixed top-0 w-full max-w-md z-30">
+    <div 
+      className="bg-zinc-950/80 backdrop-blur-md border-b border-zinc-900 px-6 flex items-center justify-between fixed top-0 w-full max-w-md z-30"
+      style={{ 
+        paddingTop: 'env(safe-area-inset-top)',
+        height: 'calc(4rem + env(safe-area-inset-top))' 
+      }}
+    >
       <div className="flex items-center gap-3">
         <div className="w-8 h-8 bg-amber-500 rounded-lg flex items-center justify-center">
           <span className="text-zinc-950 font-black text-sm">O</span>
