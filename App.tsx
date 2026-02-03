@@ -62,7 +62,6 @@ const App: React.FC = () => {
 
   // Handle Login
   const handleLoginSuccess = (identifier: string, mode: 'phone' | 'email') => {
-    // Check if user exists (Mock logic)
     const storedUser = localStorage.getItem('oviss_user');
     if (storedUser) {
       const user = JSON.parse(storedUser);
@@ -72,8 +71,6 @@ const App: React.FC = () => {
         return;
       }
     }
-    
-    // If not found, go to create account with pre-filled identifier
     setScreen('create-account');
   };
 
@@ -85,7 +82,7 @@ const App: React.FC = () => {
       gender: userData.gender || Gender.OTHER,
       phone: userData.phone || '',
       email: userData.email || '',
-      creditBalance: 100, // Starting bonus
+      creditBalance: 100,
       ...userData
     };
     setCurrentUser(newUser);
@@ -97,7 +94,6 @@ const App: React.FC = () => {
     setScreen('login');
   };
 
-  // Notification logic
   const addNotification = useCallback((type: Notification['type'], title: string, message: string) => {
     if (!currentUser) return;
     const newNotif: Notification = {
@@ -112,20 +108,13 @@ const App: React.FC = () => {
     setNotifications(prev => [newNotif, ...prev]);
   }, [currentUser]);
 
-  // Appointment Logic
   const handleAddAppointment = (data: Omit<Appointment, 'id' | 'userId' | 'status' | 'createdAt'>) => {
     if (!currentUser) return;
-
     let assignedStylistId = data.stylistId;
     let assignmentType = data.assignmentType;
-
-    // Auto-assignment rule if No Preference
     if (assignmentType === AssignmentType.SYSTEM_AUTO) {
-      // Logic: Any available for slot, lowest bookings for the day, then rank
       const dateKey = data.date;
       const slotKey = data.timeSlot;
-
-      // Filter stylists who are not booked at this exact time in this outlet
       const availableStylists = STYLISTS.filter(s => {
         return !appointments.some(a => 
           a.date === dateKey && 
@@ -134,21 +123,15 @@ const App: React.FC = () => {
           a.status === AppointmentStatus.CONFIRMED
         );
       });
-
       const pool = availableStylists.length > 0 ? availableStylists : STYLISTS;
-
-      // Count bookings for each stylist on that day
       const sortedPool = [...pool].sort((a, b) => {
         const countA = appointments.filter(ap => ap.date === dateKey && ap.stylistId === a.id).length;
         const countB = appointments.filter(ap => ap.date === dateKey && ap.stylistId === b.id).length;
-        
         if (countA !== countB) return countA - countB;
-        return a.rank - b.rank; // Tie breaker
+        return a.rank - b.rank;
       });
-
       assignedStylistId = sortedPool[0].id;
     }
-
     const newAppointment: Appointment = {
       id: Math.random().toString(36).substr(2, 9),
       userId: currentUser.id,
@@ -157,15 +140,12 @@ const App: React.FC = () => {
       ...data,
       stylistId: assignedStylistId
     };
-
     setAppointments(prev => [newAppointment, ...prev]);
     addNotification('booked', 'Appointment booked successfully', `Your appointment at ${OUTLETS.find(o => o.id === data.outletId)?.name} is confirmed.`);
-    
     if (assignmentType === AssignmentType.SYSTEM_AUTO) {
       const stylist = STYLISTS.find(s => s.id === assignedStylistId);
       addNotification('assigned', 'Stylist assigned for your appointment', `${stylist?.name} will be serving you for your session.`);
     }
-
     setScreen('appointment');
   };
 
@@ -214,7 +194,13 @@ const App: React.FC = () => {
         />
       )}
       
-      <main className={`flex-1 overflow-y-auto no-scrollbar ${showNav ? 'pt-16 pb-20' : ''}`}>
+      <main 
+        className={`flex-1 overflow-y-auto no-scrollbar`}
+        style={{
+          paddingTop: showNav ? 'calc(4rem + env(safe-area-inset-top))' : 'env(safe-area-inset-top)',
+          paddingBottom: showNav ? 'calc(5rem + env(safe-area-inset-bottom))' : 'env(safe-area-inset-bottom)'
+        }}
+      >
         {renderScreen()}
       </main>
 
