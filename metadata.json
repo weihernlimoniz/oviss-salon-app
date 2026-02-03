@@ -1,0 +1,7 @@
+{
+  "name": "Oviss Salon Customer App V1",
+  "description": "A high-end customer-facing mobile MVP prototype for Oviss Salon, featuring OTP authentication, multi-step appointment booking with stylist auto-assignment, and real-time notifications.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
