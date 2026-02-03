@@ -1,10 +1,11 @@
 {
-  "name": "Oviss Salon Customer App",
-  "short_name": "Oviss Salon",
-  "id": "/",
+  "name": "Oviss Salon",
+  "short_name": "Oviss",
+  "id": "oviss-salon-final",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "fullscreen"],
   "background_color": "#09090b",
   "theme_color": "#09090b",
   "description": "Premium Salon Appointment Booking",
@@ -12,12 +13,14 @@
     {
       "src": "https://picsum.photos/seed/oviss/192/192",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "https://picsum.photos/seed/oviss/512/512",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
