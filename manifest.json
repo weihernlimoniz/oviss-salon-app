@@ -1,6 +1,7 @@
 {
   "name": "Oviss Salon Customer App",
   "short_name": "Oviss Salon",
+  "id": "/",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
